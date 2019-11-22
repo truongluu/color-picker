@@ -23,11 +23,11 @@ export default class ColorPicker extends React.Component {
       valueProps = {...props.value};
     }
     const alpha = typeof valueProps.alpha === 'undefined'
-      ? valueProps.defaultAlpha
-      : Math.min(valueProps.alpha, valueProps.defaultAlpha);
+      ? props.defaultAlpha
+      : Math.min(valueProps.alpha, props.defaultAlpha);
 
     this.state = {
-      color: valueProps.color || valueProps.defaultColor,
+      color: valueProps.color || props.defaultColor,
       alpha,
       open: false,
     };
