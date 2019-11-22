@@ -18,13 +18,16 @@ function prevent(e) {
 export default class ColorPicker extends React.Component {
   constructor(props) {
     super(props);
-
-    const alpha = typeof props.alpha === 'undefined'
-      ? props.defaultAlpha
-      : Math.min(props.alpha, props.defaultAlpha);
+    let valueProps = {...props};
+    if (props && props.value) {
+      valueProps = {...props.value};
+    }
+    const alpha = typeof valueProps.alpha === 'undefined'
+      ? valueProps.defaultAlpha
+      : Math.min(valueProps.alpha, valueProps.defaultAlpha);
 
     this.state = {
-      color: props.color || props.defaultColor,
+      color: valueProps.color || valueProps.defaultColor,
       alpha,
       open: false,
     };
@@ -52,14 +55,18 @@ export default class ColorPicker extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.color) {
+    let nextPropsAlternative = {...nextProps};
+    if (nextProps && nextProps.value) {
+      nextPropsAlternative = {...nextProps.value};
+    }
+    if (nextPropsAlternative.color) {
       this.setState({
-        color: nextProps.color,
+        color: nextPropsAlternative.color,
       });
     }
-    if (nextProps.alpha !== null && nextProps.alpha !== undefined) {
+    if (nextPropsAlternative.alpha !== null && nextPropsAlternative.alpha !== undefined) {
       this.setState({
-        alpha: nextProps.alpha,
+        alpha: nextPropsAlternative.alpha,
       });
     }
   }
